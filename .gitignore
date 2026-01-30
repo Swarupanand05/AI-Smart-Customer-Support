@@ -1,0 +1,207 @@
+############################################################
+#    UNIVERSAL .gitignore
+#  (.NET + React + Node.js + Python + VS Code/VS)
+############################################################
+
+
+############################
+#       DOTNET / ASP.NET
+############################
+
+# Build Folders
+bin/
+obj/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+[Bb]uild/
+[Bb]uilds/
+artifacts/
+
+# Debug/Release
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+
+# Lock files
+project.lock.json
+project.fragment.lock.json
+
+# NuGet packages
+*.nupkg
+*.snupkg
+packages/
+
+# Others
+*.dll
+*.exe
+*.pdb
+*.cache
+*.config
+*.dbmdl
+
+
+############################
+#      VISUAL STUDIO
+############################
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# VS Code
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+
+
+############################
+#         NODE.JS
+############################
+
+# Dependencies
+node_modules/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Build
+dist/
+build/
+.cache/
+.next/
+.nuxt/
+.eslintcache
+
+
+############################
+#         REACT
+############################
+
+node_modules/
+build/
+dist/
+.cache/
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+
+############################
+#           PYTHON
+############################
+
+# Byte-compiled
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Environments
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+*.ipynb_history
+
+# Python logs / caches
+*.log
+*.pickle
+*.h5
+*.keras
+*.pth
+__pycache__/
+.cache/
+
+
+############################
+#        AI/ML MODELS
+############################
+*.model
+*.joblib
+*.pb
+*.h5
+*.tflite
+*.onnx
+
+
+############################
+#       OPERATING SYSTEM
+############################
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Linux
+*~
+.nfs*
+
+
+############################
+#         ENV FILES
+############################
+.env
+.env.*
+*.env
+*.env.local
+
+
+############################
+#         LOG FILES
+############################
+*.log
+logs/
+log/
+
+
+############################
+#       TEMP FILES
+############################
+*.tmp
+*.temp
+*.swp
+*.swo
+~$*
+*~
+
+
+############################
+#        IDE FILES
+############################
+
+# JetBrains / Rider
+.idea/
+*.iml
+
+# PyCharm
+.pytest_cache/
+migrations/
+
+# Others
+*.bak
+*.orig
+
+
+############################################################
+#     END OF UNIVERSAL .gitignore
+############################################################
