@@ -1,0 +1,329 @@
+/* ─── Layout ─────────────────────────────────────────────────────────────── */
+.admin-layout {
+  display: flex;
+  height: 100vh;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background: #0f172a;
+}
+
+/* ─── Sidebar ────────────────────────────────────────────────────────────── */
+.admin-sidebar {
+  width: 250px;
+  background: #1e293b;
+  color: white;
+  padding: 24px 16px;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  border-right: 1px solid #334155;
+}
+
+.admin-logo {
+  font-size: 20px;
+  font-weight: 800;
+  color: #f8fafc;
+  margin-bottom: 28px;
+  letter-spacing: 0.5px;
+}
+
+/* ─── Admin User Info ────────────────────────────────────────────────────── */
+.admin-user-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 12px;
+  padding: 12px;
+  margin-bottom: 28px;
+  border: 1px solid #334155;
+}
+
+.admin-avatar {
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, #ef4444, #b91c1c);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.admin-user-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: #f1f5f9;
+}
+
+.admin-user-role {
+  font-size: 11px;
+  color: #ef4444;
+  font-weight: 500;
+}
+
+/* ─── Nav ────────────────────────────────────────────────────────────────── */
+.admin-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+}
+
+.admin-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 14px;
+  border-radius: 10px;
+  border: none;
+  background: transparent;
+  color: #94a3b8;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.2s, color 0.2s;
+}
+
+.admin-nav-item:hover {
+  background: rgba(255,255,255,0.07);
+  color: #f1f5f9;
+}
+
+.admin-nav-item.active {
+  background: rgba(239,68,68,0.15);
+  color: #fca5a5;
+  font-weight: 700;
+}
+
+/* ─── Badge ──────────────────────────────────────────────────────────────── */
+.badge {
+  margin-left: auto;
+  background: #334155;
+  color: #cbd5e1;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 999px;
+}
+
+.badge-yellow { background: #451a03; color: #fbbf24; }
+.badge-green  { background: #052e16; color: #4ade80; }
+
+/* ─── Logout ─────────────────────────────────────────────────────────────── */
+.admin-logout-btn {
+  margin-top: 8px;
+  padding: 11px 14px;
+  background: rgba(239,68,68,0.1);
+  border: 1px solid rgba(239,68,68,0.25);
+  border-radius: 10px;
+  color: #fca5a5;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.2s;
+}
+.admin-logout-btn:hover { background: rgba(239,68,68,0.2); }
+
+/* ─── Main Content ───────────────────────────────────────────────────────── */
+.admin-main {
+  flex: 1;
+  background: #f8fafc;
+  overflow-y: auto;
+  padding: 32px;
+}
+
+/* ─── Top Bar ────────────────────────────────────────────────────────────── */
+.admin-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 28px;
+}
+
+.admin-topbar h1 {
+  font-size: 22px;
+  color: #0f172a;
+  font-weight: 800;
+}
+
+.refresh-btn {
+  padding: 8px 16px;
+  background: white;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13px;
+  color: #1e4ed8;
+  font-weight: 600;
+  transition: background 0.2s;
+}
+.refresh-btn:hover { background: #f1f5f9; }
+
+/* ─── Alerts ─────────────────────────────────────────────────────────────── */
+.admin-alert {
+  padding: 12px 16px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 20px;
+}
+.admin-alert.error   { background: #fee2e2; color: #dc2626; }
+.admin-alert.success { background: #dcfce7; color: #16a34a; }
+
+/* ─── Stats Grid ─────────────────────────────────────────────────────────── */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.stat-box {
+  background: white;
+  border-radius: 16px;
+  padding: 24px;
+  cursor: pointer;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+  border-left: 4px solid #e2e8f0;
+  transition: transform 0.2s, box-shadow 0.2s;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.stat-box:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.1); }
+.stat-box.open     { border-left-color: #f59e0b; }
+.stat-box.resolved { border-left-color: #22c55e; }
+.stat-box.high     { border-left-color: #ef4444; }
+
+.stat-num {
+  font-size: 36px;
+  font-weight: 800;
+  color: #1e293b;
+  line-height: 1;
+}
+.stat-label {
+  font-size: 13px;
+  color: #64748b;
+  font-weight: 500;
+}
+
+.section-subtitle {
+  font-size: 16px;
+  color: #334155;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+/* ─── Ticket List ────────────────────────────────────────────────────────── */
+.admin-ticket-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.admin-ticket-card {
+  background: white;
+  border-radius: 14px;
+  padding: 18px 22px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  border: 1px solid #e2e8f0;
+  transition: box-shadow 0.2s;
+}
+.admin-ticket-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.09); }
+
+.admin-ticket-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.admin-ticket-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.admin-user-tag {
+  font-size: 12px;
+  color: #475569;
+  font-weight: 600;
+  background: #f1f5f9;
+  padding: 3px 10px;
+  border-radius: 999px;
+}
+
+.admin-category-tag {
+  font-size: 12px;
+  color: #475569;
+  background: #f1f5f9;
+  padding: 3px 10px;
+  border-radius: 999px;
+}
+
+.admin-priority-tag {
+  font-size: 11px;
+  font-weight: 700;
+  color: white;
+  padding: 3px 10px;
+  border-radius: 999px;
+}
+
+.admin-status-tag {
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.admin-ticket-msg {
+  font-size: 14px;
+  color: #334155;
+  line-height: 1.6;
+  margin-bottom: 14px;
+}
+
+.admin-ticket-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.admin-ticket-date {
+  font-size: 12px;
+  color: #94a3b8;
+}
+
+/* ─── Action Buttons ─────────────────────────────────────────────────────── */
+.admin-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.action-btn {
+  padding: 6px 14px;
+  border-radius: 8px;
+  border: none;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.15s;
+}
+.action-btn:hover { opacity: 0.85; transform: scale(1.03); }
+
+.action-btn.resolve { background: #dcfce7; color: #16a34a; }
+.action-btn.close   { background: #f1f5f9; color: #475569; }
+.action-btn.reopen  { background: #fef9c3; color: #92400e; }
+
+/* ─── Loading / Empty ────────────────────────────────────────────────────── */
+.admin-loading, .admin-empty {
+  color: #64748b;
+  font-size: 14px;
+  padding: 20px 0;
+  text-align: center;
+}
