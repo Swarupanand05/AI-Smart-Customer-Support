@@ -7,9 +7,22 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// ─── CORS ──────────────────────────────────────────────────────────────────
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowReactApp", policy =>
+    {
+        policy.WithOrigins("http://localhost:3000")
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
+
+// ─── Database (SQL Server via EF Core) ─────────────────────────────────────
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+// ─── JWT Auth ───────────────────────────────────────────────────────────────
 builder.Services.AddScoped<JwtService>();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -22,33 +35,33 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         ValidateLifetime = true,
         ValidateIssuerSigningKey = true,
         IssuerSigningKey = new SymmetricSecurityKey(
-            Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"])
+            Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!)
         )
     };
 });
 
-
-
-// Add services
+// ─── Services ───────────────────────────────────────────────────────────────
 builder.Services.AddSingleton<MongoService>();
 builder.Services.AddSingleton<AIService>();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddHttpClient<MLService>();
 
 var app = builder.Build();
 
-// Configure middleware
+// ─── Middleware Pipeline ─────────────────────────────────────────────────────
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+app.UseCors("AllowReactApp");   // Must be before auth
 
+// app.UseHttpsRedirection();  // Disabled — frontend calls HTTP port 5273 directly
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 
-app.Run();
+app.Run();

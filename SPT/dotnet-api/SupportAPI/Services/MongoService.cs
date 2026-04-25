@@ -6,18 +6,25 @@ namespace SupportAPI.Services
 {
     public class MongoService
     {
+        private readonly IMongoCollection<ChatMessage> _chats;
         private readonly IMongoCollection<Ticket> _tickets;
 
         public MongoService(IConfiguration config)
         {
             var client = new MongoClient(config["MongoDB:ConnectionString"]);
             var database = client.GetDatabase(config["MongoDB:DatabaseName"]);
+
             _tickets = database.GetCollection<Ticket>("Tickets");
+            _chats = database.GetCollection<ChatMessage>("Chats"); // ✅ ADD THIS
         }
 
         public async Task CreateTicket(Ticket ticket)
         {
             await _tickets.InsertOneAsync(ticket);
+        }
+        public async Task SaveChat(ChatMessage chat)
+        {
+            await _chats.InsertOneAsync(chat);
         }
 
         public async Task<List<Ticket>> GetTickets()

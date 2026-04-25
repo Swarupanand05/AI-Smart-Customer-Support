@@ -43,5 +43,12 @@ namespace SupportAPI.Services
 
             return null;
         }
+        public string GetPriority(string sentiment)
+        {
+            if (sentiment == "Negative")
+                return "High";
+
+            return "Medium";
+        }
     }
 }
