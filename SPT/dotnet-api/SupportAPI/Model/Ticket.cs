@@ -7,7 +7,7 @@ namespace SupportAPI.Models
     public class Ticket
     {
         [BsonId]
-        public ObjectId Id { get; set; }   // 🔥 IMPORTANT CHANGE
+        public ObjectId Id { get; set; }  
 
         public string UserEmail { get; set; }
         public string Message { get; set; }
