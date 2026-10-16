@@ -1,0 +1,515 @@
+/* ═══════════════════════════════════════════════════════
+   Login.css — AI Smart Support Enterprise Auth System
+   Theme: Deep Slate + Teal/Emerald — Linear-inspired
+   ═══════════════════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap');
+
+/* ─── Reset & Base ───────────────────────────────────── */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  height: 100%;
+  font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─── Split-screen Layout ────────────────────────────── */
+.container {
+  height: 100%;
+  display: flex;
+  background: #070c14;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Left panel — branding */
+.container::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 42%;
+  height: 100%;
+  background: linear-gradient(155deg, #0d1f2d 0%, #071420 40%, #020d19 100%);
+  border-right: 1px solid rgba(20, 184, 166, 0.12);
+  z-index: 0;
+}
+
+/* Geometric grid lines on left panel */
+.container::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 42%;
+  height: 100%;
+  background-image:
+    linear-gradient(rgba(20,184,166,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(20,184,166,0.05) 1px, transparent 1px);
+  background-size: 40px 40px;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* ─── Left Branding Panel ────────────────────────────── */
+.auth-left-panel {
+  width: 42%;
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  padding: 48px 52px;
+  flex-shrink: 0;
+}
+
+.auth-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: auto;
+}
+
+.auth-brand-icon {
+  width: 44px;
+  height: 44px;
+  background: linear-gradient(135deg, #14b8a6, #0ea5e9);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 0 1px rgba(20,184,166,0.4), 0 8px 28px rgba(20,184,166,0.25);
+}
+
+.auth-brand-icon svg {
+  width: 22px;
+  height: 22px;
+  fill: white;
+}
+
+.auth-brand-name {
+  font-size: 19px;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.5px;
+}
+
+.auth-brand-name span {
+  color: #2dd4bf;
+}
+
+/* Hero text on left panel */
+.auth-hero {
+  margin-top: auto;
+  margin-bottom: 60px;
+}
+
+.auth-hero-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(20,184,166,0.1);
+  border: 1px solid rgba(20,184,166,0.25);
+  border-radius: 999px;
+  padding: 5px 14px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #2dd4bf;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+.auth-hero-tag::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  background: #2dd4bf;
+  border-radius: 50%;
+  box-shadow: 0 0 8px #2dd4bf;
+  animation: pulseLive 2s ease-in-out infinite;
+}
+
+@keyframes pulseLive {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.8); }
+}
+
+.auth-hero h1 {
+  font-size: 36px;
+  font-weight: 800;
+  color: #f8fafc;
+  line-height: 1.2;
+  letter-spacing: -1px;
+  margin-bottom: 14px;
+}
+
+.auth-hero h1 span {
+  background: linear-gradient(135deg, #2dd4bf, #38bdf8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.auth-hero p {
+  font-size: 14px;
+  color: #64748b;
+  line-height: 1.7;
+  font-weight: 400;
+}
+
+/* Feature pills */
+.auth-features {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 28px;
+}
+
+.auth-feature-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  color: #94a3b8;
+  font-weight: 500;
+}
+
+.auth-feature-dot {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: rgba(20,184,166,0.15);
+  border: 1px solid rgba(20,184,166,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.auth-feature-dot svg {
+  width: 10px;
+  height: 10px;
+  stroke: #2dd4bf;
+}
+
+/* ─── Right Auth Panel ───────────────────────────────── */
+.auth-right-panel {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  position: relative;
+  z-index: 2;
+}
+
+/* ─── Card ───────────────────────────────────────────── */
+.card {
+  background: #0d1520;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 16px;
+  padding: 44px 40px;
+  width: 100%;
+  max-width: 400px;
+  text-align: left;
+  box-shadow: 0 24px 64px rgba(0,0,0,0.6);
+  animation: slideUp 0.45s cubic-bezier(0.16,1,0.3,1) both;
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Top accent bar */
+.card::before {
+  content: '';
+  display: block;
+  width: 36px;
+  height: 3px;
+  background: linear-gradient(90deg, #14b8a6, #0ea5e9);
+  border-radius: 999px;
+  margin-bottom: 24px;
+}
+
+/* ─── Avatar / Icon ──────────────────────────────────── */
+.avatar {
+  width: 48px;
+  height: 48px;
+  background: linear-gradient(135deg, #14b8a6, #0ea5e9);
+  border-radius: 12px;
+  margin: 0 0 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 20px rgba(20,184,166,0.3);
+}
+
+/* ─── Headings ───────────────────────────────────────── */
+.card h2 {
+  font-size: 23px;
+  font-weight: 800;
+  color: #f8fafc;
+  margin-bottom: 4px;
+  letter-spacing: -0.5px;
+}
+
+.subtitle {
+  font-size: 13.5px;
+  color: #64748b;
+  margin-bottom: 28px;
+  line-height: 1.5;
+  font-weight: 400;
+}
+
+/* ─── Form Group ─────────────────────────────────────── */
+.form-group {
+  margin-bottom: 14px;
+}
+
+.form-label {
+  display: block;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #64748b;
+  margin-bottom: 7px;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+}
+
+/* ─── Inputs ─────────────────────────────────────────── */
+.input {
+  width: 100%;
+  padding: 12px 14px;
+  background: rgba(255,255,255,0.04);
+  border: 1.5px solid rgba(255,255,255,0.08);
+  border-radius: 8px;
+  color: #e2e8f0;
+  font-size: 14px;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 400;
+  outline: none;
+  transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+}
+
+/* Password input wrapper with Eye toggle button */
+.password-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.password-wrapper .input {
+  padding-right: 44px;
+}
+
+.toggle-password-btn {
+  position: absolute;
+  right: 12px;
+  background: none;
+  border: none;
+  color: #64748b;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+  border-radius: 6px;
+  transition: color 0.2s, background 0.2s;
+}
+
+.toggle-password-btn:hover {
+  color: #14b8a6;
+  background: rgba(255,255,255,0.05);
+}
+
+.input::placeholder {
+  color: #334155;
+}
+
+.input:focus {
+  border-color: #14b8a6;
+  background: rgba(20,184,166,0.05);
+  box-shadow: 0 0 0 3px rgba(20,184,166,0.12);
+}
+
+.input:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* ─── Messages ───────────────────────────────────────── */
+.error-msg {
+  background: rgba(239,68,68,0.08);
+  color: #fca5a5;
+  border: 1px solid rgba(239,68,68,0.2);
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  margin-bottom: 14px;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 500;
+}
+
+.success-msg {
+  background: rgba(20,184,166,0.08);
+  color: #5eead4;
+  border: 1px solid rgba(20,184,166,0.2);
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  margin-bottom: 14px;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 500;
+}
+
+/* ─── Button ─────────────────────────────────────────── */
+.button {
+  width: 100%;
+  padding: 13px;
+  margin-top: 6px;
+  background: linear-gradient(135deg, #0f766e, #0891b2);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 14px;
+  font-family: 'Outfit', sans-serif;
+  letter-spacing: 0.2px;
+  transition: all 0.2s;
+  box-shadow: 0 4px 14px rgba(20,184,166,0.25);
+  position: relative;
+  overflow: hidden;
+}
+
+.button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
+  transition: left 0.5s;
+}
+
+.button:hover:not(:disabled)::before {
+  left: 100%;
+}
+
+.button:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 22px rgba(20,184,166,0.35);
+}
+
+.button:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* ─── Register Link ──────────────────────────────────── */
+.register-text {
+  margin-top: 20px;
+  font-size: 13px;
+  color: #475569;
+  text-align: center;
+}
+
+.link {
+  color: #2dd4bf;
+  cursor: pointer;
+  margin-left: 5px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.link:hover {
+  color: #5eead4;
+}
+
+/* ─── Divider ────────────────────────────────────────── */
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 18px 0;
+}
+
+.divider::before,
+.divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: rgba(255,255,255,0.06);
+}
+
+.divider span {
+  font-size: 11px;
+  color: #334155;
+  font-weight: 600;
+}
+
+/* ─── Google Sign-In Button ──────────────────────────── */
+.google-btn-wrapper {
+  width: 100%;
+  margin-bottom: 4px;
+}
+
+/* Override @react-oauth/google iframe to fill full width */
+.google-btn-wrapper > div,
+.google-btn-wrapper iframe {
+  width: 100% !important;
+  border-radius: 8px !important;
+}
+
+/* Loading state fallback button */
+.google-btn {
+  width: 100%;
+  padding: 11px 16px;
+  background: rgba(255,255,255,0.05);
+  border: 1.5px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  color: #94a3b8;
+  font-size: 14px;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 500;
+  cursor: not-allowed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: all 0.2s;
+}
+
+/* Loading spinner for Google button */
+.google-spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(148,163,184,0.3);
+  border-top-color: #2dd4bf;
+  border-radius: 50%;
+  animation: googleSpin 0.7s linear infinite;
+  flex-shrink: 0;
+}
+
+@keyframes googleSpin {
+  to { transform: rotate(360deg); }
+}

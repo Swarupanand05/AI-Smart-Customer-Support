@@ -1,0 +1,642 @@
+[
+  {
+    "text": "Why was my debit card charged 49 dollars when the receipt says 39?",
+    "category": "Billing"
+  },
+  {
+    "text": "I see two identical transactions of Rs 1499 on my bank statement for the same order",
+    "category": "Billing"
+  },
+  {
+    "text": "My payment went through netbanking but the screen showed transaction failed",
+    "category": "Billing"
+  },
+  {
+    "text": "Can you email me the official tax invoice with company GST number?",
+    "category": "Billing"
+  },
+  {
+    "text": "I was promised a refund within 5 business days but nothing has reached my account",
+    "category": "Billing"
+  },
+  {
+    "text": "Why is there an unexpected international transaction fee on my bill?",
+    "category": "Billing"
+  },
+  {
+    "text": "My annual subscription auto renewed without prior notification please cancel and refund",
+    "category": "Billing"
+  },
+  {
+    "text": "The payment gateway rejected my Visa card three times with error code 102",
+    "category": "Billing"
+  },
+  {
+    "text": "I need a breakdown of the customs duty charges billed on my invoice",
+    "category": "Billing"
+  },
+  {
+    "text": "Money was deducted from my Google Pay wallet but order status is pending",
+    "category": "Billing"
+  },
+  {
+    "text": "Can I pay for my purchase using two separate credit cards?",
+    "category": "Billing"
+  },
+  {
+    "text": "Account balance kat gaya par order place nahi hua",
+    "category": "Billing"
+  },
+  {
+    "text": "Where can I view all previous billing receipts and VAT invoices?",
+    "category": "Billing"
+  },
+  {
+    "text": "My bank confirmed the charge was reversed but your portal still shows overdue",
+    "category": "Billing"
+  },
+  {
+    "text": "Is there an additional surcharge for using American Express at checkout?",
+    "category": "Billing"
+  },
+  {
+    "text": "Why did my monthly subscription price increase without any notice?",
+    "category": "Billing"
+  },
+  {
+    "text": "I received an SMS stating Rs 850 debited for order #4491 but no email receipt",
+    "category": "Billing"
+  },
+  {
+    "text": "Please remove my saved credit card details from recurring billing",
+    "category": "Billing"
+  },
+  {
+    "text": "My company needs an itemized proforma invoice before making payment",
+    "category": "Billing"
+  },
+  {
+    "text": "Reembolso no recibido en mi tarjeta de credito",
+    "category": "Billing"
+  },
+  {
+    "text": "Tracking number DHL982341 shows package has been in transit for ten days without movement",
+    "category": "Shipping"
+  },
+  {
+    "text": "The courier marked my parcel as delivered today but no package was left at my door",
+    "category": "Shipping"
+  },
+  {
+    "text": "Can I change the delivery address from my office to home address before dispatch?",
+    "category": "Shipping"
+  },
+  {
+    "text": "My shipment was supposed to arrive yesterday via express courier but has been delayed",
+    "category": "Shipping"
+  },
+  {
+    "text": "How do I schedule an evening delivery slot between 6pm and 9pm?",
+    "category": "Shipping"
+  },
+  {
+    "text": "Tracking says delivery attempted but customer unavailable though I was home all day",
+    "category": "Shipping"
+  },
+  {
+    "text": "Why is my parcel stuck at the regional customs clearance facility?",
+    "category": "Shipping"
+  },
+  {
+    "text": "Can you provide the local courier driver contact number for delivery today?",
+    "category": "Shipping"
+  },
+  {
+    "text": "Order was dispatched five days ago but FedEx tracking still says label created",
+    "category": "Shipping"
+  },
+  {
+    "text": "I need to hold my package at the nearest pickup locker for three days",
+    "category": "Shipping"
+  },
+  {
+    "text": "Delivery person refused to bring the heavy appliance up to the third floor",
+    "category": "Shipping"
+  },
+  {
+    "text": "Mera parcel kab tak deliver hoga tracking number batado",
+    "category": "Shipping"
+  },
+  {
+    "text": "Is expedited same day courier service available in Bangalore pin code 560001?",
+    "category": "Shipping"
+  },
+  {
+    "text": "The outer packaging was soaked in rain and torn when the courier handed it to me",
+    "category": "Shipping"
+  },
+  {
+    "text": "Order status shows out for delivery since 8am but it is now 9pm",
+    "category": "Shipping"
+  },
+  {
+    "text": "Can someone else sign for my package if I am not available at the address?",
+    "category": "Shipping"
+  },
+  {
+    "text": "Where is my package right now it has been two weeks since dispatch",
+    "category": "Shipping"
+  },
+  {
+    "text": "Please instruct the delivery partner to leave the parcel with security guard",
+    "category": "Shipping"
+  },
+  {
+    "text": "Tracking history shows package sent to wrong hub in another state",
+    "category": "Shipping"
+  },
+  {
+    "text": "Donde esta mi envio no se actualiza el numero de rastreo",
+    "category": "Shipping"
+  },
+  {
+    "text": "I want to return the leather shoes because the size 9 is too tight for my feet",
+    "category": "Returns"
+  },
+  {
+    "text": "The television screen arrived cracked and shattered inside the box I need an immediate replacement",
+    "category": "Returns"
+  },
+  {
+    "text": "How do I generate a prepaid return shipping label from my order history page?",
+    "category": "Returns"
+  },
+  {
+    "text": "I ordered a blue dress but received a yellow one instead please arrange exchange",
+    "category": "Returns"
+  },
+  {
+    "text": "The kitchen blender stopped working on the second day of use I want to send it back",
+    "category": "Returns"
+  },
+  {
+    "text": "I placed an order ten minutes ago by mistake can you cancel it before warehouse packing?",
+    "category": "Returns"
+  },
+  {
+    "text": "The return courier was supposed to pick up the parcel yesterday but nobody showed up",
+    "category": "Returns"
+  },
+  {
+    "text": "What is the return window duration for unopened electronics items?",
+    "category": "Returns"
+  },
+  {
+    "text": "The replacement jacket you sent is also defective at the zipper please process full refund",
+    "category": "Returns"
+  },
+  {
+    "text": "I changed my mind about the sofa set and wish to cancel the order before delivery",
+    "category": "Returns"
+  },
+  {
+    "text": "Product received is completely different from the pictures shown on your catalog",
+    "category": "Returns"
+  },
+  {
+    "text": "Ye product kharab nikla mujhe return karna hai aur paise wapas chahiye",
+    "category": "Returns"
+  },
+  {
+    "text": "Can I return an item purchased during a clearance sale for store credit?",
+    "category": "Returns"
+  },
+  {
+    "text": "How long after warehouse inspection will my return refund be processed?",
+    "category": "Returns"
+  },
+  {
+    "text": "The box was missing two essential accessories listed on the product package",
+    "category": "Returns"
+  },
+  {
+    "text": "I want to exchange my medium shirt for large size how does the replacement process work?",
+    "category": "Returns"
+  },
+  {
+    "text": "Is it possible to drop off the return package at a local partner store rather than courier pickup?",
+    "category": "Returns"
+  },
+  {
+    "text": "Cancel my order immediately as delivery is taking much longer than promised",
+    "category": "Returns"
+  },
+  {
+    "text": "The headphone left earbud does not emit any sound right out of the box",
+    "category": "Returns"
+  },
+  {
+    "text": "Deseo devolver este producto defectuoso y solicitar reembolso",
+    "category": "Returns"
+  },
+  {
+    "text": "I am unable to sign in to my account because the two factor SMS code never arrives",
+    "category": "Account"
+  },
+  {
+    "text": "I forgot my account password and the reset link emailed to me gives an expired token error",
+    "category": "Account"
+  },
+  {
+    "text": "My profile was locked after five consecutive failed password attempts please unlock it",
+    "category": "Account"
+  },
+  {
+    "text": "How do I update my registered mobile number and email address on my profile?",
+    "category": "Account"
+  },
+  {
+    "text": "I suspect someone accessed my account from an unfamiliar IP address in another country",
+    "category": "Account"
+  },
+  {
+    "text": "Please permanently delete all my personal data and deactivate my registered account",
+    "category": "Account"
+  },
+  {
+    "text": "I am not receiving the email verification confirmation link in my inbox or spam folder",
+    "category": "Account"
+  },
+  {
+    "text": "Can I merge two separate customer accounts associated with different email IDs?",
+    "category": "Account"
+  },
+  {
+    "text": "The authentication app OTP is showing invalid code when I attempt to log in",
+    "category": "Account"
+  },
+  {
+    "text": "My username is not recognized even though I have active orders under this account",
+    "category": "Account"
+  },
+  {
+    "text": "Unable to change my shipping address in account settings the save button is disabled",
+    "category": "Account"
+  },
+  {
+    "text": "Mera account login nahi ho raha password bhul gaya hu",
+    "category": "Account"
+  },
+  {
+    "text": "How do I enable biometric fingerprint login on the iOS mobile application?",
+    "category": "Account"
+  },
+  {
+    "text": "My account was suspended without warning please explain why and reactivate it",
+    "category": "Account"
+  },
+  {
+    "text": "Can I remove my primary email address and replace it with a new work email?",
+    "category": "Account"
+  },
+  {
+    "text": "Getting session timed out message every time I click on profile management",
+    "category": "Account"
+  },
+  {
+    "text": "I cannot upload my government ID for identity verification on my profile page",
+    "category": "Account"
+  },
+  {
+    "text": "Why does the login page keep looping back to the sign in prompt without logging in?",
+    "category": "Account"
+  },
+  {
+    "text": "Please unlink my Facebook and Google social login from this shopping account",
+    "category": "Account"
+  },
+  {
+    "text": "No puedo iniciar sesion en mi cuenta contraseña olvidada",
+    "category": "Account"
+  },
+  {
+    "text": "The Android mobile app crashes immediately upon opening the checkout screen",
+    "category": "Technical"
+  },
+  {
+    "text": "Getting HTTP 500 internal server error whenever I try to view my order history",
+    "category": "Technical"
+  },
+  {
+    "text": "The website search filter produces a blank white page when selecting price range",
+    "category": "Technical"
+  },
+  {
+    "text": "Push notifications for price drop alerts stopped working after the latest version update",
+    "category": "Technical"
+  },
+  {
+    "text": "The shopping cart page keeps reloading indefinitely without showing items",
+    "category": "Technical"
+  },
+  {
+    "text": "API response time is over ten seconds and frequently times out with 504 gateway timeout",
+    "category": "Technical"
+  },
+  {
+    "text": "The product image zoom tool freezes Google Chrome on Windows 11",
+    "category": "Technical"
+  },
+  {
+    "text": "I am getting error code ERR_CONNECTION_REFUSED when accessing the customer portal",
+    "category": "Technical"
+  },
+  {
+    "text": "Database synchronization failed and items added to wishlist disappear upon page refresh",
+    "category": "Technical"
+  },
+  {
+    "text": "The web application is extremely slow to load taking more than thirty seconds per page",
+    "category": "Technical"
+  },
+  {
+    "text": "Audio is stuttering and out of sync during the video preview on the app",
+    "category": "Technical"
+  },
+  {
+    "text": "App baar baar crash ho raha hai screen blank ho jaati hai",
+    "category": "Technical"
+  },
+  {
+    "text": "Is your web service compatible with Safari browser on macOS Sonoma?",
+    "category": "Technical"
+  },
+  {
+    "text": "The export to PDF button for statements triggers a corrupt file download",
+    "category": "Technical"
+  },
+  {
+    "text": "WebSocket connection dropped and real time chat does not receive agent replies",
+    "category": "Technical"
+  },
+  {
+    "text": "Getting 403 forbidden error when trying to upload warranty documentation screenshot",
+    "category": "Technical"
+  },
+  {
+    "text": "The payment iframe does not render properly on mobile Firefox browser",
+    "category": "Technical"
+  },
+  {
+    "text": "Memory usage spikes to 100 percent when opening the 3D model product viewer",
+    "category": "Technical"
+  },
+  {
+    "text": "Clicking the submit button produces an uncaught JavaScript TypeError in console",
+    "category": "Technical"
+  },
+  {
+    "text": "La aplicacion se congela y se cierra sola error del servidor",
+    "category": "Technical"
+  },
+  {
+    "text": "What is the exact battery life of this wireless noise cancelling headphone on full charge?",
+    "category": "Product"
+  },
+  {
+    "text": "Does this mechanical gaming keyboard come with hot swappable optical switches?",
+    "category": "Product"
+  },
+  {
+    "text": "Is this 65W USB-C GaN charger compatible with the 2024 Apple MacBook Air M3?",
+    "category": "Product"
+  },
+  {
+    "text": "What are the physical dimensions and weight of this standing electric desk in centimeters?",
+    "category": "Product"
+  },
+  {
+    "text": "Does this cordless vacuum cleaner come with a two year manufacturer warranty included?",
+    "category": "Product"
+  },
+  {
+    "text": "When will the graphite gray color variant of this smartphone be back in stock?",
+    "category": "Product"
+  },
+  {
+    "text": "Does this smart television support Dolby Vision HDR and HDMI 2.1 eARC connectivity?",
+    "category": "Product"
+  },
+  {
+    "text": "Is the outer material of this travel backpack genuine leather or water resistant polyester?",
+    "category": "Product"
+  },
+  {
+    "text": "Where can I download the English user manual and driver installation guide for this webcam?",
+    "category": "Product"
+  },
+  {
+    "text": "How many HDMI and DisplayPort input ports are available on the back of this 32 inch monitor?",
+    "category": "Product"
+  },
+  {
+    "text": "What is the maximum weight capacity supported by this ergonomic office chair?",
+    "category": "Product"
+  },
+  {
+    "text": "Kya ye laptop gaming ke liye acha hai aur isme warranty kitne saal ki hai",
+    "category": "Product"
+  },
+  {
+    "text": "Can I expand the internal SSD storage on this pre built mini PC after purchase?",
+    "category": "Product"
+  },
+  {
+    "text": "Is this stainless steel cookware set suitable for use on induction cooktop stoves?",
+    "category": "Product"
+  },
+  {
+    "text": "Does this smartwatch feature standalone GPS and ECG heart health monitoring?",
+    "category": "Product"
+  },
+  {
+    "text": "What is the difference in specifications between the standard and pro versions of this tablet?",
+    "category": "Product"
+  },
+  {
+    "text": "Are replacement ear cushions available for purchase separately for this model?",
+    "category": "Product"
+  },
+  {
+    "text": "Does this smart lock have a backup physical keyway in case the battery dies?",
+    "category": "Product"
+  },
+  {
+    "text": "How much RAM memory is pre installed and what is the maximum supported capacity?",
+    "category": "Product"
+  },
+  {
+    "text": "Cuales son las especificaciones tecnicas de este producto y garantia",
+    "category": "Product"
+  },
+  {
+    "text": "The coupon code SAVE20 gives an error saying invalid code though the promotion is active",
+    "category": "Promo"
+  },
+  {
+    "text": "How do I redeem my accumulated loyalty points for a discount voucher at checkout?",
+    "category": "Promo"
+  },
+  {
+    "text": "Is there a special student discount or educational pricing available for university students?",
+    "category": "Promo"
+  },
+  {
+    "text": "The buy one get one 50 percent off promotion did not apply to the second item in my cart",
+    "category": "Promo"
+  },
+  {
+    "text": "I was promised a 10 dollar cashback on my first order using wallet but have not received it",
+    "category": "Promo"
+  },
+  {
+    "text": "Where do I enter the promotional referral code sent by my friend during registration?",
+    "category": "Promo"
+  },
+  {
+    "text": "Does the free shipping voucher code apply to oversized furniture items?",
+    "category": "Promo"
+  },
+  {
+    "text": "My birthday discount voucher expired yesterday can customer support extend it by two days?",
+    "category": "Promo"
+  },
+  {
+    "text": "Are there any seasonal holiday sale discount codes or bundle offers running this weekend?",
+    "category": "Promo"
+  },
+  {
+    "text": "The 15 percent newsletter subscription discount code is not working on discounted clearance items",
+    "category": "Promo"
+  },
+  {
+    "text": "Can I combine two promotional coupon codes on a single purchase transaction?",
+    "category": "Promo"
+  },
+  {
+    "text": "Mera discount coupon code apply nahi ho raha invalid dikha raha hai",
+    "category": "Promo"
+  },
+  {
+    "text": "How do I earn reward points on purchases and what is their redemption exchange rate?",
+    "category": "Promo"
+  },
+  {
+    "text": "The flash sale banner said 40 percent off but checkout price showed original retail price",
+    "category": "Promo"
+  },
+  {
+    "text": "Do you offer military veteran or healthcare worker discount codes on orders?",
+    "category": "Promo"
+  },
+  {
+    "text": "My referral bonus points were deducted from my wallet balance without my authorization",
+    "category": "Promo"
+  },
+  {
+    "text": "Why does the discount coupon say minimum cart value not met when my subtotal is 120 dollars?",
+    "category": "Promo"
+  },
+  {
+    "text": "Is there an introductory discount voucher available for first time shoppers?",
+    "category": "Promo"
+  },
+  {
+    "text": "The promotional gift card balance is showing zero dollars after I entered the 16 digit pin",
+    "category": "Promo"
+  },
+  {
+    "text": "El codigo promocional de descuento no funciona en el carrito",
+    "category": "Promo"
+  },
+  {
+    "text": "What are your customer service telephone support hours during national public holidays?",
+    "category": "General"
+  },
+  {
+    "text": "Where is your corporate headquarters office located and do you have local retail stores?",
+    "category": "General"
+  },
+  {
+    "text": "I want to submit positive feedback about representative Sarah who helped me yesterday",
+    "category": "General"
+  },
+  {
+    "text": "Where can I review your complete customer privacy policy and data protection terms?",
+    "category": "General"
+  },
+  {
+    "text": "How does the trade in and exchange program work for trading older devices for credit?",
+    "category": "General"
+  },
+  {
+    "text": "Can I schedule a consultation call with an enterprise sales consultant for bulk orders?",
+    "category": "General"
+  },
+  {
+    "text": "What are the terms and conditions regarding user generated reviews and community standards?",
+    "category": "General"
+  },
+  {
+    "text": "I have a formal grievance regarding customer service attitude and wish to speak with a supervisor",
+    "category": "General"
+  },
+  {
+    "text": "Are electronic gift cards transferable to another person or can they be redeemed for cash?",
+    "category": "General"
+  },
+  {
+    "text": "How do I unsubscribe from receiving promotional marketing SMS messages and newsletters?",
+    "category": "General"
+  },
+  {
+    "text": "Is your website accessible for visually impaired users using screen reading software?",
+    "category": "General"
+  },
+  {
+    "text": "Customer care ka phone number kya hai aur kab call kar sakte hai",
+    "category": "General"
+  },
+  {
+    "text": "Do you offer corporate partnership discounts for university campus bookstores?",
+    "category": "General"
+  },
+  {
+    "text": "Where can I find press releases, media kits, and investor relations contact details?",
+    "category": "General"
+  },
+  {
+    "text": "How do I submit an application for job vacancies listed in your careers portal?",
+    "category": "General"
+  },
+  {
+    "text": "Can I request a copy of all personal communications stored under my customer profile?",
+    "category": "General"
+  },
+  {
+    "text": "What security certifications does your e-commerce platform maintain for customer safety?",
+    "category": "General"
+  },
+  {
+    "text": "I would like to suggest a feature improvement for your shopping cart interface",
+    "category": "General"
+  },
+  {
+    "text": "Do you sponsor local non-profit educational events or community sports tournaments?",
+    "category": "General"
+  },
+  {
+    "text": "Cual es el horario de atencion al cliente y numero de contacto",
+    "category": "General"
+  }
+]
