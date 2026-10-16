@@ -128,8 +128,15 @@ __pycache__/
 
 
 ############################
-#        AI/ML MODELS
+#        AI/ML MODELS & DATASETS
 ############################
+*.tgz
+*.tar.gz
+*.zip
+*.7z
+train.csv
+test.csv
+amazon_review_polarity_csv.tgz
 *.model
 *.joblib
 *.pb
