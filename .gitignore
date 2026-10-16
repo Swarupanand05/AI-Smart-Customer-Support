@@ -171,6 +171,9 @@ Desktop.ini
 .env.*
 *.env
 *.env.local
+appsettings.Development.json
+appsettings.*.json
+!appsettings.json
 
 
 ############################
