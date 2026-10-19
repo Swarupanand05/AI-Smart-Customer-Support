@@ -244,12 +244,17 @@ $$\text{Macro-F1} = \frac{0.6875 + 0.6000 + 0.3871 + 0.5000 + 0.9474 + 0.6471 + 
 
 ### Audit Assertions & Reconciliation Details
 
-Every evaluation calculation in AI-CARE satisfies automated mathematical checks:
+Every evaluation calculation in AI-CARE satisfies automated mathematical checks enforced by `canonical_evaluator.py`:
 1. $\sum \text{True Support} = \sum \text{Prediction Counts} = \sum \text{Row Sums} = \sum \text{Col Sums} = N$.
-2. $\text{Accuracy} = \frac{\text{Trace}(C)}{N} = \frac{\sum_{i=1}^8 C_{i,i}}{N}$.
+2. $\text{Accuracy} = \frac{\text{Trace}(C)}{N} = \frac{\sum_{i=1}^8 C_{i,i}}{N} \equiv \text{Micro-Precision} \equiv \text{Micro-Recall} \equiv \text{Micro-F1}$.
 3. $\text{Precision}_i = \frac{C_{i,i}}{\text{ColSum}_i}$, $\text{Recall}_i = \frac{C_{i,i}}{\text{RowSum}_i}$, $\text{F1}_i = \frac{2 \cdot P_i \cdot R_i}{P_i + R_i}$.
 4. $\text{Macro-F1}$ strictly equals the unweighted arithmetic mean of all 8 per-class F1-scores.
 5. $\text{Weighted-F1}$ strictly equals the support-weighted average $\frac{\sum S_i \cdot \text{F1}_i}{N}$.
+
+> [!NOTE]
+> **Full-Precision Invariant Evaluation:**
+> The canonical evaluator compares full-precision metric values. Macro-F1 and weighted-F1 are approximately `0.632198782746` and are displayed as `0.6322` after rounding. The tolerance assertion is evaluated using the unrounded values ($|0.632198782746223 - 0.632198782746223| < 10^{-9}$), not the rounded report figures.
+
 
 #### Explanation of Historical Inconsistencies:
 - **Historical Mean of 0.7067 vs 0.7693 Prototype**: In Phase 2.1 exploratory testing, an early prototype table with 8 F1 values averaging 0.7693 was documented in text. The underlying model array evaluated on the historical contaminated test set ($N=2,098$) had support $[251, 257, 9, 250, 16, 504, 27, 784]$ and F1s $[0.9139, 0.2651, 1.0000, 0.2486, 1.0000, 0.4409, 1.0000, 0.7851]$ whose exact unweighted mean is $\frac{5.6536}{8} = \mathbf{0.706700}$. The 0.7693 figure was an obsolete text draft artifact.
