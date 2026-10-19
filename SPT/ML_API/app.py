@@ -21,6 +21,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.pipeline import Pipeline
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
+from canonical_evaluator import evaluate_predictions
 
 
 # ──────────────────────────────────────────────────────────────────────────────
@@ -1005,6 +1006,7 @@ _cached_metrics = None
 def compute_heldout_metrics():
     """
     Computes genuine evaluation metrics on held-out test splits.
+    Uses canonical_evaluator to ensure exact mathematical assertions.
     Results are cached in-memory so subsequent requests take < 5ms.
     """
     global _cached_metrics
@@ -1022,14 +1024,7 @@ def compute_heldout_metrics():
     }
 
     try:
-        # Category test split evaluation (held-out 15% stratified split)
-        c_texts, c_labels = load_category_data()
-        X_tr_c, X_te_c, y_tr_c, y_te_c = train_test_split(
-            c_texts, c_labels, test_size=0.15, random_state=42, stratify=c_labels
-        )
-        labels_c = sorted(list(category_pipeline.classes_))
-
-        # ── System A & B: Clean Leak-Free Held-Out Test Evaluation (N = 1,986) ──
+        # Category test split evaluation (held-out 15% stratified split, 0.00% leakage)
         c_texts, c_labels = load_category_data()
         X_tr_c, X_te_c, y_tr_c, y_te_c = train_test_split(
             c_texts, c_labels, test_size=0.15, random_state=42, stratify=c_labels
@@ -1038,28 +1033,9 @@ def compute_heldout_metrics():
 
         # Raw Model Evaluation on Clean Test
         y_pred_c_raw = category_pipeline.predict(X_te_c)
-        cat_acc_raw = float(accuracy_score(y_te_c, y_pred_c_raw))
-        cat_rep_raw = classification_report(y_te_c, y_pred_c_raw, labels=labels_c, output_dict=True, zero_division=0)
-        cm_c_raw = confusion_matrix(y_te_c, y_pred_c_raw, labels=labels_c).tolist()
-
-        raw_clean_metrics = {
-            "accuracy": round(cat_acc_raw, 4),
-            "macro_f1": round(float(cat_rep_raw["macro avg"]["f1-score"]), 4),
-            "weighted_f1": round(float(cat_rep_raw["weighted avg"]["f1-score"]), 4),
-            "per_class": {
-                cls: {
-                    "precision": round(float(cat_rep_raw[cls]["precision"]), 4),
-                    "recall": round(float(cat_rep_raw[cls]["recall"]), 4),
-                    "f1_score": round(float(cat_rep_raw[cls]["f1-score"]), 4),
-                    "support": int(cat_rep_raw[cls]["support"])
-                }
-                for cls in labels_c if cls in cat_rep_raw
-            },
-            "confusion_matrix": {
-                "labels": labels_c,
-                "matrix": cm_c_raw
-            }
-        }
+        raw_clean_metrics = evaluate_predictions(
+            y_te_c, y_pred_c_raw, labels=labels_c, dataset_name="Clean Held-Out (Raw ML)"
+        )
 
         # Operational Pipeline Evaluation on Clean Test
         y_pred_c_op = []
@@ -1073,30 +1049,11 @@ def compute_heldout_metrics():
             op_cat, _ = get_operational_category(msg, cat, conf)
             y_pred_c_op.append(op_cat)
 
-        cat_acc_op = float(accuracy_score(y_te_c, y_pred_c_op))
-        cat_rep_op = classification_report(y_te_c, y_pred_c_op, labels=labels_c, output_dict=True, zero_division=0)
-        cm_c_op = confusion_matrix(y_te_c, y_pred_c_op, labels=labels_c).tolist()
+        op_clean_metrics = evaluate_predictions(
+            y_te_c, y_pred_c_op, labels=labels_c, dataset_name="Clean Held-Out (Operational Pipeline)"
+        )
 
-        op_clean_metrics = {
-            "accuracy": round(cat_acc_op, 4),
-            "macro_f1": round(float(cat_rep_op["macro avg"]["f1-score"]), 4),
-            "weighted_f1": round(float(cat_rep_op["weighted avg"]["f1-score"]), 4),
-            "per_class": {
-                cls: {
-                    "precision": round(float(cat_rep_op[cls]["precision"]), 4),
-                    "recall": round(float(cat_rep_op[cls]["recall"]), 4),
-                    "f1_score": round(float(cat_rep_op[cls]["f1-score"]), 4),
-                    "support": int(cat_rep_op[cls]["support"])
-                }
-                for cls in labels_c if cls in cat_rep_op
-            },
-            "confusion_matrix": {
-                "labels": labels_c,
-                "matrix": cm_c_op
-            }
-        }
-
-        # ── Realistic Curated Benchmark Evaluation (N = 80, balanced 10/class) ──
+        # ── Realistic Curated Development Benchmark (N = 80, balanced 10/class) ──
         bench_metrics = None
         bench_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), "provisional_benchmark.json")
         if os.path.exists(bench_file):
@@ -1108,8 +1065,9 @@ def compute_heldout_metrics():
                 b_classes = sorted(list(set(b_labels)))
 
                 b_pred_raw = category_pipeline.predict(b_texts)
-                b_acc_raw = float(accuracy_score(b_labels, b_pred_raw))
-                b_rep_raw = classification_report(b_labels, b_pred_raw, labels=b_classes, output_dict=True, zero_division=0)
+                bench_raw_eval = evaluate_predictions(
+                    b_labels, b_pred_raw, labels=b_classes, dataset_name="Development Benchmark (Raw ML)"
+                )
 
                 b_pred_op = []
                 for bt in b_texts:
@@ -1117,37 +1075,16 @@ def compute_heldout_metrics():
                     b_op_cat, _ = get_operational_category(bt, b_raw_cat, b_raw_conf)
                     b_pred_op.append(b_op_cat)
 
-                b_acc_op = float(accuracy_score(b_labels, b_pred_op))
-                b_rep_op = classification_report(b_labels, b_pred_op, labels=b_classes, output_dict=True, zero_division=0)
-                b_cm_op = confusion_matrix(b_labels, b_pred_op, labels=b_classes).tolist()
+                bench_op_eval = evaluate_predictions(
+                    b_labels, b_pred_op, labels=b_classes, dataset_name="Development Benchmark (Operational Pipeline)"
+                )
 
                 bench_metrics = {
                     "benchmark_name": "Development / Regression Benchmark (N=80, inspected during rule iteration)",
                     "sample_count": len(bench_data),
                     "classes": b_classes,
-                    "raw_model": {
-                        "accuracy": round(b_acc_raw, 4),
-                        "macro_f1": round(float(b_rep_raw["macro avg"]["f1-score"]), 4),
-                        "weighted_f1": round(float(b_rep_raw["weighted avg"]["f1-score"]), 4)
-                    },
-                    "operational_pipeline": {
-                        "accuracy": round(b_acc_op, 4),
-                        "macro_f1": round(float(b_rep_op["macro avg"]["f1-score"]), 4),
-                        "weighted_f1": round(float(b_rep_op["weighted avg"]["f1-score"]), 4),
-                        "per_class": {
-                            cls: {
-                                "precision": round(float(b_rep_op[cls]["precision"]), 4),
-                                "recall": round(float(b_rep_op[cls]["recall"]), 4),
-                                "f1_score": round(float(b_rep_op[cls]["f1-score"]), 4),
-                                "support": int(b_rep_op[cls]["support"])
-                            }
-                            for cls in b_classes if cls in b_rep_op
-                        },
-                        "confusion_matrix": {
-                            "labels": b_classes,
-                            "matrix": b_cm_op
-                        }
-                    }
+                    "raw_model": bench_raw_eval,
+                    "operational_pipeline": bench_op_eval
                 }
             except Exception as b_ex:
                 bench_metrics = {"error": str(b_ex)}
@@ -1164,9 +1101,9 @@ def compute_heldout_metrics():
                 i_classes = sorted(list(set(i_labels)))
 
                 i_pred_raw = category_pipeline.predict(i_texts)
-                i_acc_raw = float(accuracy_score(i_labels, i_pred_raw))
-                i_rep_raw = classification_report(i_labels, i_pred_raw, labels=i_classes, output_dict=True, zero_division=0)
-                i_cm_raw = confusion_matrix(i_labels, i_pred_raw, labels=i_classes).tolist()
+                indep_raw_eval = evaluate_predictions(
+                    i_labels, i_pred_raw, labels=i_classes, dataset_name="Independent Benchmark (Raw ML)"
+                )
 
                 i_pred_op = []
                 for it in i_texts:
@@ -1174,9 +1111,9 @@ def compute_heldout_metrics():
                     i_op_cat, _ = get_operational_category(it, i_raw_cat, i_raw_conf)
                     i_pred_op.append(i_op_cat)
 
-                i_acc_op = float(accuracy_score(i_labels, i_pred_op))
-                i_rep_op = classification_report(i_labels, i_pred_op, labels=i_classes, output_dict=True, zero_division=0)
-                i_cm_op = confusion_matrix(i_labels, i_pred_op, labels=i_classes).tolist()
+                indep_op_eval = evaluate_predictions(
+                    i_labels, i_pred_op, labels=i_classes, dataset_name="Independent Benchmark (Operational Pipeline)"
+                )
 
                 # Collect sample misclassifications
                 sample_errors = []
@@ -1193,43 +1130,8 @@ def compute_heldout_metrics():
                     "sample_count": len(indep_data),
                     "classes": i_classes,
                     "annotation_method": "Internally annotated by domain expert without keyword tuning overlap",
-                    "raw_model": {
-                        "accuracy": round(i_acc_raw, 4),
-                        "macro_f1": round(float(i_rep_raw["macro avg"]["f1-score"]), 4),
-                        "weighted_f1": round(float(i_rep_raw["weighted avg"]["f1-score"]), 4),
-                        "per_class": {
-                            cls: {
-                                "precision": round(float(i_rep_raw[cls]["precision"]), 4),
-                                "recall": round(float(i_rep_raw[cls]["recall"]), 4),
-                                "f1_score": round(float(i_rep_raw[cls]["f1-score"]), 4),
-                                "support": int(i_rep_raw[cls]["support"])
-                            }
-                            for cls in i_classes if cls in i_rep_raw
-                        },
-                        "confusion_matrix": {
-                            "labels": i_classes,
-                            "matrix": i_cm_raw
-                        }
-                    },
-                    "operational_pipeline": {
-                        "accuracy": round(i_acc_op, 4),
-                        "macro_f1": round(float(i_rep_op["macro avg"]["f1-score"]), 4),
-                        "weighted_f1": round(float(i_rep_op["weighted avg"]["f1-score"]), 4),
-                        "per_class": {
-                            cls: {
-                                "precision": round(float(i_rep_op[cls]["precision"]), 4),
-                                "recall": round(float(i_rep_op[cls]["recall"]), 4),
-                                "f1_score": round(float(i_rep_op[cls]["f1-score"]), 4),
-                                "support": int(i_rep_op[cls]["support"])
-                            }
-                            for cls in i_classes if cls in i_rep_op
-                        },
-                        "confusion_matrix": {
-                            "labels": i_classes,
-                            "matrix": i_cm_op
-                        },
-                        "sample_errors": sample_errors
-                    }
+                    "raw_model": indep_raw_eval,
+                    "operational_pipeline": dict(indep_op_eval, sample_errors=sample_errors)
                 }
             except Exception as id_ex:
                 indep_metrics = {"error": str(id_ex)}
@@ -1277,9 +1179,9 @@ def compute_heldout_metrics():
             # Top-level backwards compatibility fields for SupportAPI health checks
             "test_sample_count": len(y_te_c),
             "train_sample_count": len(X_tr_c),
-            "accuracy": round(cat_acc_raw, 4),
-            "macro_f1": round(float(cat_rep_raw["macro avg"]["f1-score"]), 4),
-            "weighted_f1": round(float(cat_rep_raw["weighted avg"]["f1-score"]), 4),
+            "accuracy": raw_clean_metrics["accuracy"],
+            "macro_f1": raw_clean_metrics["macro_f1"],
+            "weighted_f1": raw_clean_metrics["weighted_f1"],
             "per_class": raw_clean_metrics["per_class"],
             "confusion_matrix": raw_clean_metrics["confusion_matrix"],
             "raw_model": raw_clean_metrics,
@@ -1295,36 +1197,26 @@ def compute_heldout_metrics():
             s_texts, s_labels, test_size=0.15, random_state=42, stratify=s_labels
         )
         y_pred_s = sentiment_pipeline.predict(X_te_s)
-        sent_acc = float(accuracy_score(y_te_s, y_pred_s))
-        sent_report = classification_report(y_te_s, y_pred_s, output_dict=True, zero_division=0)
         labels_s = sorted(list(set(y_te_s)))
-        cm_s = confusion_matrix(y_te_s, y_pred_s, labels=labels_s).tolist()
+        sentiment_eval = evaluate_predictions(
+            y_te_s, y_pred_s, labels=labels_s, dataset_name="Sentiment Held-Out Split"
+        )
 
         metrics["sentiment_metrics"] = {
             "test_sample_count": len(y_te_s),
-            "train_sample_count": len(y_tr_s),
-            "accuracy": round(sent_acc, 4),
-            "macro_f1": round(float(sent_report["macro avg"]["f1-score"]), 4),
-            "weighted_f1": round(float(sent_report["weighted avg"]["f1-score"]), 4),
-            "per_class": {
-                cls: {
-                    "precision": round(float(sent_report[cls]["precision"]), 4),
-                    "recall": round(float(sent_report[cls]["recall"]), 4),
-                    "f1_score": round(float(sent_report[cls]["f1-score"]), 4),
-                    "support": int(sent_report[cls]["support"])
-                }
-                for cls in labels_s if cls in sent_report
-            },
-            "confusion_matrix": {
-                "labels": labels_s,
-                "matrix": cm_s
-            }
+            "train_sample_count": len(X_tr_s),
+            "accuracy": sentiment_eval["accuracy"],
+            "macro_f1": sentiment_eval["macro_f1"],
+            "weighted_f1": sentiment_eval["weighted_f1"],
+            "per_class": sentiment_eval["per_class"],
+            "confusion_matrix": sentiment_eval["confusion_matrix"]
         }
     except Exception as ex:
         metrics["sentiment_metrics"] = {"error": str(ex)}
 
     _cached_metrics = metrics
     return metrics
+
 
 @app.route("/health", methods=["GET"])
 def health():

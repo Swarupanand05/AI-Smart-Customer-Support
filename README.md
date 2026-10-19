@@ -178,41 +178,79 @@ To avoid ticket spamming, the `TicketController` analyzes new ticket submissions
 
 ---
 
-## 📊 Model Evaluation & Reproducibility Audit
+## 📊 Model Evaluation & Reproducibility Audit (Phase 2.3.3 Canonical)
 
-AI-CARE has undergone rigorous evaluation across multiple independent benchmarks to ensure reliability, zero data leakage, and mathematical integrity.
+AI-CARE has undergone a complete, auditable evaluation across multiple benchmarks to ensure mathematical integrity, zero data leakage, and reproducible classification metrics. All reported numbers are computed by a single canonical evaluation engine (`SPT/ML_API/canonical_evaluator.py`) with automated mathematical assertions.
 
 ### Benchmark Performance Summary
 
-| Metric Dimension | Historical Contaminated Split | Clean Held-Out Split | Development Benchmark | Independent Operational Benchmark |
-| :--- | :---: | :---: | :---: | :---: |
-| **Evaluation Set ($N$)** | **2,098** | **1,986** | **80** | **160** |
-| **Class Distribution** | Imbalanced ($9 \dots 784$) | Natural ($2 \dots 769$) | Balanced (10/class) | Balanced (20/class) |
-| **Cross-Split Data Leakage** | 6.67% *(140 duplicate rows)* | **0.00%** *(Strictly isolated)* | N/A *(Curated)* | **0.00%** *(Untouched)* |
-| **Raw ML Model Accuracy** | 57.01% | 53.47% | 65.00% | **43.75%** |
-| **Raw ML Model Macro-F1** | 0.7067 | 0.4469 | 0.6558 | **0.4414** |
-| **Operational Pipeline Accuracy**| N/A | 43.00% | 81.25% | **61.25%** |
-| **Operational Pipeline Macro-F1**| N/A | 0.4327 | 0.8182 | **0.6322** |
+| Evaluation Set ($N$) | Evaluation Scope & Notes | Cross-Split Leakage | Raw ML Accuracy | Raw ML Macro-F1 | Operational Accuracy | Operational Macro-F1 |
+| :--- | :--- | :---: | :---: | :---: | :---: | :---: |
+| **Historical Split ($N = 2,098$)** | *Contaminated reference* (4x synthetic replication) | 6.67% *(140 duplicate rows)* | 57.01% | 0.7067 | N/A | N/A |
+| **Clean Held-Out Split ($N = 1,986$)** | 15% stratified test split on 13,239 unique rows | **0.00%** *(Strictly isolated)* | 53.47% | 0.4469 | 43.00% *(safe sink)* | 0.4327 |
+| **Development Benchmark ($N = 80$)** | Curated 10/class set (used during rule iteration) | N/A *(Internal dev set)* | 65.00% | 0.6595 | 81.25% | 0.8182 |
+| **Independent Benchmark ($N = 160$)** | Balanced 20/class untouched validation set | **0.00%** *(Strictly isolated)* | 43.75% | 0.4414 | **61.25%** | **0.6322** |
+| **Sentiment Held-Out Split ($N = 3,650$)** | 15% stratified test split on 24,328 reviews & tweets | **0.00%** *(Strictly isolated)* | 75.10% | 0.7414 | 75.10% | 0.7414 |
+
+> [!NOTE]
+> **Why Operational Accuracy is 43.00% on the Clean Kaggle Held-Out Split:**
+> The Kaggle/IT Helpdesk dataset contains raw stack traces and internal kernel crash logs lacking conversational e-commerce keywords. When machine learning confidence falls below $0.60$ and no domain keyword matches, the operational classifier safely routes inquiries to `General` (which received 598 predictions). This safety fallback prevents erroneous automated refunds or account modifications on ambiguous messages.
+
+---
 
 ### Independent Operational Benchmark Breakdown ($N = 160$, Balanced 20/Class)
 
-The untouched, independent evaluation benchmark yields the following per-class metrics:
+The independent operational benchmark consists of 160 realistic customer inquiries (20 per category), held strictly separate from rule engineering. Evaluated with `canonical_evaluator.py`:
 
-| Category | True Support | Precision | Recall | F1-Score | Operational Characteristics |
-| :--- | :---: | :---: | :---: | :---: | :--- |
-| **Account** | 20 | 0.9167 | 0.5500 | **0.6875** | High Precision, credential detection |
-| **Billing** | 20 | 0.9000 | 0.4500 | **0.6000** | Catches unauthorized / invoice errors |
-| **General** | 20 | 0.2857 | 0.6000 | **0.3871** | Conservative safe fallback sink |
-| **Product** | 20 | 0.8750 | 0.3500 | **0.5000** | High Precision on product questions |
-| **Promo** | 20 | 1.0000 | 0.9000 | **0.9474** | Robust coupon / discount extraction |
-| **Returns** | 20 | 0.7857 | 0.5500 | **0.6471** | Reliable refund & exchange tracking |
-| **Shipping** | 20 | 0.7778 | 0.7000 | **0.7368** | Fast courier / tracking matching |
-| **Technical** | 20 | 0.4211 | 0.8000 | **0.5517** | Broad technical bug detection |
-| **Overall (Unweighted)** | **160** | **0.7452** | **0.6125** | **0.6322** | **+17.5% Accuracy over raw ML** |
+| Category | True Support | Pred Count | TP | FP | FN | Precision | Recall | F1-Score | Operational Characteristics |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :--- |
+| **Account** | 20 | 12 | 11 | 1 | 9 | 0.9167 | 0.5500 | **0.6875** | High Precision, credential reset detection |
+| **Billing** | 20 | 10 | 9 | 1 | 11 | 0.9000 | 0.4500 | **0.6000** | Catches unauthorized charges & invoices |
+| **General** | 20 | 42 | 12 | 30 | 8 | 0.2857 | 0.6000 | **0.3871** | Conservative safe fallback sink |
+| **Product** | 20 | 8 | 7 | 1 | 13 | 0.8750 | 0.3500 | **0.5000** | High Precision on product questions |
+| **Promo** | 20 | 18 | 18 | 0 | 2 | 1.0000 | 0.9000 | **0.9474** | Robust coupon & discount extraction |
+| **Returns** | 20 | 14 | 11 | 3 | 9 | 0.7857 | 0.5500 | **0.6471** | Reliable refund & exchange tracking |
+| **Shipping** | 20 | 18 | 14 | 4 | 6 | 0.7778 | 0.7000 | **0.7368** | Fast courier & tracking matching |
+| **Technical** | 20 | 38 | 16 | 22 | 4 | 0.4211 | 0.8000 | **0.5517** | Broad technical bug detection |
+| **Overall (Unweighted)** | **160** | **160** | **98** | **62** | **62** | **0.7452** | **0.6125** | **0.6322** | **+17.5% Accuracy over raw ML** |
+
+$$\text{Accuracy} = \frac{\text{Trace}(C)}{N} = \frac{11 + 9 + 12 + 7 + 18 + 11 + 14 + 16}{160} = \frac{98}{160} = \mathbf{0.6125}\ (61.25\%)$$
 
 $$\text{Macro-F1} = \frac{0.6875 + 0.6000 + 0.3871 + 0.5000 + 0.9474 + 0.6471 + 0.7368 + 0.5517}{8} = \mathbf{0.632200}$$
 
+#### Operational Pipeline Confusion Matrix ($N = 160$)
+*Rows represent True Ground-Truth Categories; Columns represent Predicted Categories:*
+
+| True Category \ Pred | Account | Billing | General | Product | Promo | Returns | Shipping | Technical | **Row Sum (True Support)** |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| **Account** | **11** | 0 | 5 | 0 | 0 | 1 | 1 | 2 | **20** |
+| **Billing** | 0 | **9** | 10 | 0 | 0 | 0 | 0 | 1 | **20** |
+| **General** | 0 | 0 | **12** | 0 | 0 | 1 | 0 | 7 | **20** |
+| **Product** | 0 | 0 | 4 | **7** | 0 | 1 | 0 | 8 | **20** |
+| **Promo** | 1 | 0 | 0 | 0 | **18** | 0 | 0 | 1 | **20** |
+| **Returns** | 0 | 0 | 4 | 0 | 0 | **11** | 3 | 2 | **20** |
+| **Shipping** | 0 | 0 | 5 | 0 | 0 | 0 | **14** | 1 | **20** |
+| **Technical** | 0 | 1 | 2 | 1 | 0 | 0 | 0 | **16** | **20** |
+| **Col Sum (Predicted)**| **12** | **10** | **42** | **8** | **18** | **14** | **18** | **38** | **160** |
+
+*Matrix Trace (Sum of Diagonal):* $11 + 9 + 12 + 7 + 18 + 11 + 14 + 16 = 98$.
+
 ---
+
+### Audit Assertions & Reconciliation Details
+
+Every evaluation calculation in AI-CARE satisfies automated mathematical checks:
+1. $\sum \text{True Support} = \sum \text{Prediction Counts} = \sum \text{Row Sums} = \sum \text{Col Sums} = N$.
+2. $\text{Accuracy} = \frac{\text{Trace}(C)}{N} = \frac{\sum_{i=1}^8 C_{i,i}}{N}$.
+3. $\text{Precision}_i = \frac{C_{i,i}}{\text{ColSum}_i}$, $\text{Recall}_i = \frac{C_{i,i}}{\text{RowSum}_i}$, $\text{F1}_i = \frac{2 \cdot P_i \cdot R_i}{P_i + R_i}$.
+4. $\text{Macro-F1}$ strictly equals the unweighted arithmetic mean of all 8 per-class F1-scores.
+5. $\text{Weighted-F1}$ strictly equals the support-weighted average $\frac{\sum S_i \cdot \text{F1}_i}{N}$.
+
+#### Explanation of Historical Inconsistencies:
+- **Historical Mean of 0.7067 vs 0.7693 Prototype**: In Phase 2.1 exploratory testing, an early prototype table with 8 F1 values averaging 0.7693 was documented in text. The underlying model array evaluated on the historical contaminated test set ($N=2,098$) had support $[251, 257, 9, 250, 16, 504, 27, 784]$ and F1s $[0.9139, 0.2651, 1.0000, 0.2486, 1.0000, 0.4409, 1.0000, 0.7851]$ whose exact unweighted mean is $\frac{5.6536}{8} = \mathbf{0.706700}$. The 0.7693 figure was an obsolete text draft artifact.
+- **Historical 1.0000 F1 on Minority Classes**: The old dataset replicated 246 synthetic sentences $4\times$ prior to random splitting, leaking 140 identical sentences into the test set. This created artificial $1.0000$ scores for `General`, `Promo`, and `Shipping`. In the clean, deduplicated dataset ($0.00\%$ cross-split leakage), genuine held-out F1 scores are reported without artificial inflation.
+- **Evaluation Independence Disclaimer**: The 160-sample operational benchmark is an internally curated evaluation set created without keyword tuning overlap. It has not been annotated or certified by a third-party audit firm. No unverified claims of "91.99% category accuracy" or "88.76% sentiment accuracy" are asserted.
+
 
 ## 🚀 Getting Started
 
