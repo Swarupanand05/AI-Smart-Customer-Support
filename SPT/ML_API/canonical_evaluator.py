@@ -111,6 +111,11 @@ def evaluate_predictions(y_true, y_pred, labels=None, dataset_name="Evaluation")
     weighted_precision = float(sum(p * s for p, s in zip(precision_list, support_list)) / total_supp)
     weighted_recall = float(sum(r * s for r, s in zip(recall_list, support_list)) / total_supp)
 
+    # Micro metrics (identical to accuracy in single-label multi-class evaluation)
+    micro_precision = accuracy
+    micro_recall = accuracy
+    micro_f1 = accuracy
+
     # ── Automated Mathematical Assertions ──
     # 1. Total class support equals total sample count
     assert sum(support_list) == N, f"[{dataset_name}] Sum of supports {sum(support_list)} != N {N}"
@@ -132,17 +137,23 @@ def evaluate_predictions(y_true, y_pred, labels=None, dataset_name="Evaluation")
     # 8. Weighted-F1 equals exact support-weighted mean
     manual_wf1 = sum(f1_list[i] * support_list[i] for i in range(K)) / float(N)
     assert abs(weighted_f1 - manual_wf1) < 1e-9, f"[{dataset_name}] Weighted-F1 mismatch"
+    # 9. Micro metrics equal accuracy
+    assert abs(micro_f1 - accuracy) < 1e-9, f"[{dataset_name}] Micro-F1 != accuracy"
 
     return {
         "dataset_name": dataset_name,
         "sample_count": N,
+        "total_correct": cm_trace,
         "accuracy": round(accuracy, 4),
         "macro_f1": round(macro_f1, 4),
-        "weighted_f1": round(weighted_f1, 4),
         "macro_precision": round(macro_precision, 4),
         "macro_recall": round(macro_recall, 4),
+        "weighted_f1": round(weighted_f1, 4),
         "weighted_precision": round(weighted_precision, 4),
         "weighted_recall": round(weighted_recall, 4),
+        "micro_f1": round(micro_f1, 4),
+        "micro_precision": round(micro_precision, 4),
+        "micro_recall": round(micro_recall, 4),
         "raw_accuracy": accuracy,
         "raw_macro_f1": macro_f1,
         "raw_weighted_f1": weighted_f1,
@@ -154,3 +165,4 @@ def evaluate_predictions(y_true, y_pred, labels=None, dataset_name="Evaluation")
         },
         "assertions_passed": True
     }
+

@@ -193,8 +193,8 @@ AI-CARE has undergone a complete, auditable evaluation across multiple benchmark
 | **Sentiment Held-Out Split ($N = 3,650$)** | 15% stratified test split on 24,328 reviews & tweets | **0.00%** *(Strictly isolated)* | 75.10% | 0.7414 | 75.10% | 0.7414 |
 
 > [!NOTE]
-> **Why Operational Accuracy is 43.00% on the Clean Kaggle Held-Out Split:**
-> The Kaggle/IT Helpdesk dataset contains raw stack traces and internal kernel crash logs lacking conversational e-commerce keywords. When machine learning confidence falls below $0.60$ and no domain keyword matches, the operational classifier safely routes inquiries to `General` (which received 598 predictions). This safety fallback prevents erroneous automated refunds or account modifications on ambiguous messages.
+> **Operational Fallback Trade-offs & Abstention Analysis:**
+> On the clean Kaggle/IT Helpdesk held-out split, the operational pipeline achieved **43.00% accuracy** (854 / 1,986) compared to 53.47% (1,062 / 1,986) for raw ML. **This outcome is an operational safety trade-off, not an improvement in multi-class classification performance.** The Kaggle IT dataset contains raw stack traces and internal kernel crash logs lacking conversational e-commerce keywords. The raw ML model is forced to make a hard guess on these queries (frequently misclassifying them as `Returns` or `Technical`), whereas the operational pipeline conservatively routes all queries with $< 0.60$ confidence and no keyword matches to `General` (598 predictions). Because true `General` inquiries only count 2 rows in this test split, sinking 598 low-confidence queries reduces measured test accuracy while preventing erroneous automated refunds or account locks in production. Introducing an explicit `NeedsManualReview` or `Unknown` abstention status would better isolate safety gating without conflating abstentions with semantic `General` queries.
 
 ---
 
@@ -212,11 +212,16 @@ The independent operational benchmark consists of 160 realistic customer inquiri
 | **Returns** | 20 | 14 | 11 | 3 | 9 | 0.7857 | 0.5500 | **0.6471** | Reliable refund & exchange tracking |
 | **Shipping** | 20 | 18 | 14 | 4 | 6 | 0.7778 | 0.7000 | **0.7368** | Fast courier & tracking matching |
 | **Technical** | 20 | 38 | 16 | 22 | 4 | 0.4211 | 0.8000 | **0.5517** | Broad technical bug detection |
-| **Overall (Unweighted)** | **160** | **160** | **98** | **62** | **62** | **0.7452** | **0.6125** | **0.6322** | **+17.5% Accuracy over raw ML** |
+| **Macro Average** | **160** | **160** | **98** | **62** | **62** | **0.7452** | **0.6125** | **0.6322** | **+17.50 percentage points in accuracy over raw ML** |
+| **Micro Average** | **160** | **160** | **98** | **62** | **62** | **0.6125** | **0.6125** | **0.6125** | **Trace / N = 98 / 160 = 61.25%** |
+| **Weighted Average** | **160** | **160** | **98** | **62** | **62** | **0.7452** | **0.6125** | **0.6322** | **Balanced 20/class distribution** |
 
 $$\text{Accuracy} = \frac{\text{Trace}(C)}{N} = \frac{11 + 9 + 12 + 7 + 18 + 11 + 14 + 16}{160} = \frac{98}{160} = \mathbf{0.6125}\ (61.25\%)$$
 
+$$\text{Accuracy Gain} = 61.25\% - 43.75\% = \mathbf{+17.50\ \text{percentage points}}$$
+
 $$\text{Macro-F1} = \frac{0.6875 + 0.6000 + 0.3871 + 0.5000 + 0.9474 + 0.6471 + 0.7368 + 0.5517}{8} = \mathbf{0.632200}$$
+
 
 #### Operational Pipeline Confusion Matrix ($N = 160$)
 *Rows represent True Ground-Truth Categories; Columns represent Predicted Categories:*
